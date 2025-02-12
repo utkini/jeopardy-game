@@ -1,0 +1,10 @@
+{{define "players-list"}}
+    {{range .Players}}
+    <div class="flex justify-between items-center border p-4 rounded">
+        <div>
+            <span class="font-medium">{{.Name}}</span>
+            <span class="ml-4 text-gray-600">Score: {{.Score}}</span>
+        </div>
+    </div>
+    {{end}}
+{{end}}
