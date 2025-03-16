@@ -1,0 +1,116 @@
+{{define "questions"}}
+<div class="board">
+    <div class="container">
+        <!-- Categories and Questions Grid -->
+        {{range .CategoryRows}}
+        <div class="columns mb-2">
+            <!-- Category -->
+            <div class="column is-3">
+                <div class="box has-text-centered has-background-primary has-text-white mb-0">
+                    <h3 class="title is-5 has-text-white mb-0">{{.Category.Name}}</h3>
+                </div>
+            </div>
+
+            <!-- Questions for this category -->
+            <div class="column">
+                <div class="columns is-multiline mb-0">
+                    {{range .Questions}}
+                    <div class="column is-2">
+                        <div class="box question-box {{if .IsAnswered}}answered{{end}}"
+                             hx-get="/question/{{.ID}}"
+                             hx-target="#question-modal-content"
+                             hx-trigger="click"
+                             onclick="document.getElementById('question-modal').classList.add('is-active')"
+                             {{if not .IsAnswered}}style="cursor: pointer;"{{end}}>
+                            {{if .IsAnswered}}
+                                {{if .WasCorrect}}
+                                    <span class="icon has-text-success">
+                                        <i class="fas fa-check"></i>
+                                    </span>
+                                {{else}}
+                                    <span class="icon has-text-danger">
+                                        <i class="fas fa-times"></i>
+                                    </span>
+                                {{end}}
+                            {{else}}
+                                <div class="has-text-centered">
+                                    <span class="is-size-4">{{.Points}}</span>
+                                </div>
+                            {{end}}
+                        </div>
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+        {{end}}
+    </div>
+</div>
+
+<!-- Question Modal -->
+<div id="question-modal" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Question</p>
+            <button class="delete" aria-label="close" onclick="closeModal()"></button>
+        </header>
+        <section id="question-modal-content" class="modal-card-body">
+            <!-- Question content will be loaded here -->
+        </section>
+    </div>
+</div>
+
+<style>
+.board {
+    padding: 1rem;
+}
+.question-box {
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1a237e;
+    color: white;
+    transition: all 0.3s ease;
+    padding: 1rem;
+}
+.question-box:hover:not(.answered) {
+    transform: scale(1.05);
+    background-color: #283593;
+}
+.question-box.answered {
+    background-color: #424242;
+    cursor: not-allowed;
+}
+.columns {
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+}
+.column {
+    padding: 0.5rem;
+}
+.box {
+    margin-bottom: 0;
+}
+</style>
+
+<script>
+function closeModal() {
+    document.getElementById('question-modal').classList.remove('is-active');
+}
+
+document.addEventListener('click', function(e) {
+    if (e.target.matches('.modal-background')) {
+        closeModal();
+    }
+});
+
+// Handle ESC key to close modal
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeModal();
+    }
+});
+</script>
+{{end}}

@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  jeopardy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./configs:/app/configs:ro  # Mount configs as read-only
+    restart: unless-stopped
+    environment:
+      - TZ=UTC  # Set timezone 
