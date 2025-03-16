@@ -1,0 +1,49 @@
+{{define "content"}}
+<div class="section">
+    <div class="container">
+        <h1 class="title is-2 has-text-centered mb-6">Jeopardy Game</h1>
+
+        <div class="tabs is-centered is-boxed">
+            <ul>
+                <li class="{{if eq .CurrentTab "players"}}is-active{{end}}" id="players-tab">
+                    <a hx-get="/"
+                       hx-target="#main-content"
+                       hx-push-url="true"
+                       onclick="switchTab('players-tab')">
+                        <span class="icon"><i class="fas fa-users"></i></span>
+                        <span>Players</span>
+                    </a>
+                </li>
+                <li class="{{if eq .CurrentTab "questions"}}is-active{{end}}" id="game-tab">
+                    <a hx-get="/questions"
+                       hx-target="#main-content"
+                       hx-push-url="true"
+                       onclick="switchTab('game-tab')">
+                        <span class="icon"><i class="fas fa-gamepad"></i></span>
+                        <span>Game Board</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div id="main-content" class="mt-6">
+            {{if eq .CurrentTab "players"}}
+                {{template "players-list" .}}
+            {{else if eq .CurrentTab "questions"}}
+                {{template "questions" .}}
+            {{else}}
+                {{template "players-list" .}}
+            {{end}}
+        </div>
+    </div>
+</div>
+
+<script>
+function switchTab(activeTabId) {
+    document.querySelectorAll('.tabs li').forEach(tab => {
+        tab.classList.remove('is-active');
+    });
+    document.getElementById(activeTabId).classList.add('is-active');
+}
+</script>
+{{end}}

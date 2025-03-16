@@ -1,0 +1,82 @@
+{{define "players-list"}}
+<div class="container">
+    <div class="box" id="players-list">
+        <h2 class="title is-4 mb-4">Players</h2>
+        
+        <form hx-post="/player"
+              hx-target="#players-list"
+              hx-swap="outerHTML"
+              class="field has-addons mb-5">
+            <div class="control is-expanded">
+                <input type="text"
+                       name="name"
+                       placeholder="Player Name"
+                       class="input"
+                       required>
+            </div>
+            <div class="control">
+                <button type="submit"
+                        class="button is-primary">
+                    <span class="icon">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                    <span>Add Player</span>
+                </button>
+            </div>
+        </form>
+
+        <div class="columns is-multiline">
+            {{range .Players}}
+            <div class="column is-4">
+                <div class="box has-background-light mb-2">
+                    <div class="level is-mobile">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <span class="icon has-text-info">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <span class="ml-2 has-text-weight-semibold">{{.Name}}</span>
+                            </div>
+                        </div>
+                        <div class="level-right">
+                            <div class="level-item">
+                                <div class="tags has-addons">
+                                    <span class="tag is-dark">Score</span>
+                                    <span class="tag is-info">{{.Score}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{end}}
+        </div>
+
+        <!-- Reset Game Button -->
+        <div class="has-text-centered mt-4">
+            <button class="button is-danger"
+                    hx-post="/game/reset"
+                    hx-target="#players-list"
+                    onclick="return confirm('Are you sure you want to reset all scores and questions?')">
+                <span class="icon">
+                    <i class="fas fa-redo"></i>
+                </span>
+                <span>Reset Game</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+.level.is-mobile {
+    margin-bottom: 0 !important;
+}
+.box {
+    transition: all 0.3s ease;
+}
+.box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+</style>
+{{end}}

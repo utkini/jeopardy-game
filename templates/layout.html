@@ -1,0 +1,134 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy Game</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px !important;
+            padding: 1rem;
+        }
+        .modal {
+            display: none;
+        }
+        .modal.is-active {
+            display: flex;
+        }
+        .media-container {
+            margin: 1rem 0;
+            text-align: center;
+        }
+        .media-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .media-container video,
+        .media-container audio {
+            width: 100%;
+        }
+        .youtube-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
+        .youtube-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .section {
+            padding: 1.5rem;
+        }
+    </style>
+    <script>
+        // Load YouTube API
+        var tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // Global variable to track if YouTube API is ready
+        var youtubeAPIReady = false;
+        window.onYouTubeIframeAPIReady = function() {
+            youtubeAPIReady = true;
+            // Initialize any pending players
+            initializePendingPlayers();
+        };
+
+        // Store pending players until API is ready
+        var pendingPlayers = [];
+        function initializePendingPlayers() {
+            while (pendingPlayers.length > 0) {
+                var player = pendingPlayers.pop();
+                createYouTubePlayer(player.containerId, player.videoUrl);
+            }
+        }
+
+        function createYouTubePlayer(containerId, videoUrl) {
+            var videoId = getYouTubeVideoId(videoUrl);
+            if (videoId) {
+                new YT.Player(containerId, {
+                    videoId: videoId,
+                    height: '100%',
+                    width: '100%',
+                    playerVars: {
+                        'autoplay': 0,
+                        'controls': 1,
+                        'rel': 0,
+                        'modestbranding': 1
+                    }
+                });
+            }
+        }
+
+        function initYouTubePlayer(containerId, videoUrl) {
+            if (youtubeAPIReady) {
+                createYouTubePlayer(containerId, videoUrl);
+            } else {
+                pendingPlayers.push({ containerId, videoUrl });
+            }
+        }
+
+        function getYouTubeVideoId(url) {
+            var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            var match = url.match(regExp);
+            return (match && match[7].length == 11) ? match[7] : false;
+        }
+
+        function closeModal() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.classList.remove('is-active');
+            });
+        }
+
+        // Listen for modal opening
+        document.addEventListener('htmx:afterSwap', function(event) {
+            if (event.detail.target.classList.contains('modal-content')) {
+                const playerContainer = event.detail.target.querySelector('.youtube-container');
+                if (playerContainer) {
+                    const videoUrl = playerContainer.dataset.videoUrl;
+                    const playerId = playerContainer.dataset.playerId;
+                    initYouTubePlayer(playerId, videoUrl);
+                }
+            }
+        });
+    </script>
+</head>
+<body>
+    {{template "content" .}}
+</body>
+</html>
+{{end}}

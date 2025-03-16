@@ -4,54 +4,84 @@ categories:
       - question: Кто такой Владимир Красное Солнышко?
         answer: Этот князь крестил Русь в 988 году
         points: 100
+        media_type: none
+        media_url: ""
       - question: Что такое 988 год?
         answer: В этом году произошло крещение Руси
         points: 200
+        media_type: none
+        media_url: ""
       - question: Кто такой Александр Невский?
         answer: Он разгромил шведов в Невской битве
         points: 300
+        media_type: none
+        media_url: ""
       - question: Кто такой Пётр Первый?
         answer: Этот царь основал Санкт-Петербург
         points: 400
+        media_type: none
+        media_url: ""
       - question: Что такое стояние на реке Угре?
         answer: Эта битва положила конец монголо-татарскому игу
         points: 500
+        media_type: none
+        media_url: ""
 
   - name: География
     questions:
       - question: Что такое Байкал?
         answer: Самое глубокое озеро в мире
         points: 100
+        media_type: image
+        media_url: ""
       - question: Что такое Ключевская Сопка?
         answer: Самый высокий действующий вулкан Евразии
         points: 200
+        media_type: image
+        media_url: ""
       - question: Что такое Дунай?
         answer: Эта река протекает через 10 стран Европы
         points: 300
+        media_type: image
+        media_url: ""
       - question: Что такое Анды?
         answer: Самая длинная горная цепь на суше
         points: 400
+        media_type: image
+        media_url: ""
       - question: Что такое Антарктида?
         answer: Этот материк полностью расположен в Южном полушарии
         points: 500
+        media_type: image
+        media_url: ""
 
   - name: Наука
     questions:
       - question: Что такое водород?
         answer: Самый распространённый элемент во Вселенной
         points: 100
+        media_type: none
+        media_url: ""
       - question: Кто такой Менделеев?
         answer: Этот русский учёный создал таблицу химических элементов
         points: 200
+        media_type: image
+        media_url: ""
       - question: Что такое электрон?
         answer: Эта частица имеет отрицательный заряд
         points: 300
+        media_type: audio
+        media_url: "static/audio/house.mp3"
       - question: Что такое рассеяние Рэлея?
         answer: Этот эффект объясняет, почему небо голубое
         points: 400
-      - question: Кто такой Иоганн Кеплер?
-        answer: Этот учёный открыл законы движения планет
+        media_type: image
+        media_url: "https://media-hosting.imagekit.io//b1e27ce1053f49ad/zen-dzen-sinii.jpg?Expires=1836751230&Key-Pair-Id=K2ZIVPTIP2VGHC&Signature=zFF~0VIZzCFw3cfzTc~MkRPfqqRtYEMFXlxl0UkAhAc-jo23nrk13GKEKGt5LI5pmufjUvO0vHzOYKDR~C7F2eet7Y9ICtoJVjDdd2xSk7k-l3iFAFW7dcfR2s11baz5O78Ax0epALyNAnBXGQeVO5C5gUWLHh8LQh17sytQ3Kwqr-Vju5Dxi80Dd7x5~NS1fNwJJuJi4Sdry~wqPGFMMBrXC6wZ~moo6neoDX7IxeyMr-M6Zf0q8zlOR4lPnTBIdbJk2gE2Gwu1RP6hMl3beGUMGFtw5nHrFwZtdl9KihV6YO6toMKLbATJJ0g0gARtC4OOJRe6f6P9quu9Iv~nCQ__"
+      - question: Что такое квантовая запутанность?
+        answer: Это явление, при котором квантовые состояния двух или более частиц оказываются взаимозависимыми
         points: 500
+        media_type: video
+        media_url: "https://www.youtube.com/watch?v=YbB4-7OS6Co"
 
   - name: Литература
     questions:
